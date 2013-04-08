@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet id="1" author="matthias.herold">
+    <createTable tableName="pms_user">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="name" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" unique="true" />
+      </column>
+    </createTable>
+    <createTable tableName="pms_client">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="default_client" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="name" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" unique="true" />
+      </column>
+    </createTable>
+    <createTable tableName="pms_role">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="name" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" unique="true" />
+      </column>
+    </createTable>
+    <createTable tableName="pms_permission">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="name" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" unique="true" />
+      </column>
+      <column name="admin" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <createTable tableName="pms_user_client">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="user_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="client_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint constraintName="pms_user_client_user" baseTableName="pms_user_client" baseColumnNames="user_id" referencedTableName="pms_user" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    <addForeignKeyConstraint constraintName="pms_user_client_client" baseTableName="pms_user_client" baseColumnNames="client_id" referencedTableName="pms_client" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    <addUniqueConstraint tableName="pms_user_client" columnNames="user_id,client_id" constraintName="pms_user_client_fk_unique"/>
+    <createTable tableName="pms_user_client_role">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="user_client_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="role_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint constraintName="pms_user_client_role_user_client" baseTableName="pms_user_client_role" baseColumnNames="user_client_id" referencedTableName="pms_user_client" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    <addForeignKeyConstraint constraintName="pms_user_client_role_role" baseTableName="pms_user_client_role" baseColumnNames="role_id" referencedTableName="pms_role" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    <addUniqueConstraint tableName="pms_user_client_role" columnNames="user_client_id,role_id" constraintName="pms_user_client_role_fk_unique"/>
+    <createTable tableName="pms_role_permission">
+      <column name="id" type="BIGINT">
+        <constraints primaryKey="true" nullable="false" unique="true" />
+      </column>
+      <column name="create_date" type="DATETIME">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_user" type="java.sql.Types.VARCHAR(255)">
+        <constraints nullable="false" />
+      </column>
+      <column name="change_date" type="DATETIME" />
+      <column name="change_user" type="java.sql.Types.VARCHAR(255)" />
+      <column name="locked" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="create_permission" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="edit_permission" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="delete_permission" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="read_permission" type="BOOLEAN" defaultValueBoolean="false">
+        <constraints nullable="false" />
+      </column>
+      <column name="role_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="permission_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint constraintName="pms_role_permission_role" baseTableName="pms_role_permission" baseColumnNames="role_id" referencedTableName="pms_role" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    <addForeignKeyConstraint constraintName="pms_role_permission_permission" baseTableName="pms_role_permission" baseColumnNames="permission_id" referencedTableName="pms_permission" referencedColumnNames="id" onDelete="CASCADE" onUpdate="CASCADE" />
+    <addUniqueConstraint tableName="pms_role_permission" columnNames="role_id,permission_id" constraintName="pms_role_permission_fk_unique"/>
+    <createSequence sequenceName="pms_sequence" />
+  </changeSet>
+</databaseChangeLog>
