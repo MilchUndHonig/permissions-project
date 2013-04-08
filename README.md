@@ -25,6 +25,13 @@ Start "Permissions Project Build.launch" launch configuration (in the root direc
 
 Start "Permissions Webapp Starter.launch" launch configuration to start a glassfish instance containing the permissions main project (if not using eclipse, run the main method in PermissionsWebappStarter.java).
 
+Note: If you choose to launch the web application starter, you can either provide a postgresql database on localhost (port 5432, user permissions, password permissions), or provide an other database.
+If you choose to provide an other database, you will have to change PermissionsWebappStarter.java. Look at the glassfish documentation to change the following lines to whatever connection you want to use:
+```java
+    final CommandResult commandResult = commandRunner.run("create-jdbc-connection-pool", "--datasourceclassname=org.postgresql.ds.PGSimpleDataSource",
+        "--restype=javax.sql.DataSource", "--property=user=permissions:password=permissions:DatabaseName=permissions:ServerName=localhost:port=5432", "pms_permissions-pool");
+```
+
 ## Setup for usage
 
-To use this project in a web application, simply include the maven dependency "permissions", add the PermissionsIntegrationListener to the web.xml and launch the web application in an application server environment providing a jdbc resource with the name "jdbc/permission", EJB 3 and JPA.
+To use this project in a web application, simply include the maven dependency "permissions", add the PermissionsIntegrationListener to the web.xml and launch the web application in an application server environment providing a jdbc resource with the name "jdbc/permissions", EJB 3 and JPA.
