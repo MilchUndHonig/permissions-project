@@ -1,6 +1,6 @@
 # Permissions Project
 
-CAUTION: At this time, this project is under development and the first version is not yet released, so look in the source code and use this project as a base, or wait until the first release is released :)
+CAUTION: At this time, this project is under development and the first version is not yet released, so look at the source code and use this project as a base, or wait until the first release is released :)
 
 This project contains:
 
